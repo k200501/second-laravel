@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('pagetitle')</title>
 
     <!-- Scripts -->
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
@@ -15,6 +15,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -37,8 +38,19 @@
                             <li class="nav-item">
                                 <a href="{{ asset('/admin/news') }}" class="nav-link">最新消息</a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ asset('/admin/product') }}" class="nav-link">產品資訊</a>
+                            </li> --}}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">產品資訊</a>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="{{ asset('/admin/product/type') }}">產品種類</a>
+                                  <a class="dropdown-item" href="{{ asset('/admin/product/item') }}">產品品項</a>
+
+                                </div>
+                              </li>
+                            <li class="nav-item">
+                                <a href="{{ asset('/admin/user') }}" class="nav-link">會員管理</a>
                             </li>
 
                         @endcan
@@ -82,12 +94,28 @@
         </nav>
 
         <main class="py-4">
+            @if (Session::has('message'))
+            <div class="alert alert-success" rold='alert'>
+                {{ Session::get('message') }}
+            </div>
+
+            @endif
+
+
+
             @yield('content')
         </main>
     </div>
     @yield('js')
 
 
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+
+    <script src="{{ asset('https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js') }}"></script>
+    <script>
+            $(document).ready(function() {
+            $('#example').DataTable();
+             } );
+    </script>
 </body>
 </html>
