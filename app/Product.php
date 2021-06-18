@@ -7,4 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     //
+    protected $fillable = ['product_name','price','discript','product_type_id'];
+    public function type(){
+        //一對一關聯取出來的資料，就是單筆資料
+        return $this->belongsTo(ProductType::class,'product_type_id');
+    }
+    public function photos(){
+        return $this->hasMany(ProductImg::class,'product_id');
+    }
 }
