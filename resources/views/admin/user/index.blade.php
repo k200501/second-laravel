@@ -38,6 +38,8 @@
                             <tr>
                                 <th>姓名</th>
                                 <th>信箱</th>
+                                <th>電話</th>
+                                <th>地址</th>
                                 <th>角色</th>
                                 <th>操作</th>
 
@@ -48,6 +50,9 @@
                                 <tr>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
+                                    {{-- ??''如果找不到，就讓他空白 --}}
+                                    <td>{{ $item->client->phone??'' }}</td>
+                                    <td>{{ $item->client->address??'' }}</td>
                                     <td>{{ $item->role }}</td>
                                     <td>
                                         <a href="{{ asset('/admin/user/edit') }}/{{ $item->id }}" class="btn btn-primary btn-sm">編輯</a>
@@ -77,6 +82,8 @@
                             <tr>
                                 <th>姓名</th>
                                 <th>信箱</th>
+                                <th>電話</th>
+                                <th>地址</th>
                                 <th>角色</th>
                                 <th>操作</th>
                             </tr>

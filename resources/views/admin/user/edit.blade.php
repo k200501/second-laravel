@@ -28,7 +28,7 @@
                         <label for="role" class="col-md-4 col-form-label text-md-right">角色</label>
 
                         <div class="col-md-6">
-                            <select class="form-control" id="role" name="role">
+                            <select class="form-control" id="role" name="role" disabled>
                                 <option @if ($record->role == 'admin') selected
 
                                 @endif>admin</option>
@@ -72,6 +72,37 @@
                             @enderror --}}
                         </div>
                     </div>
+                    @if ($record->role =='user')
+
+
+                    <div class="form-group row">
+                        <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('phone') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ $record->client->phone??'' }}" required autocomplete="phone" autofocus>
+
+                            {{-- @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror --}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('address') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ $record->client->address??'' }}" required autocomplete="address" autofocus>
+
+                            {{-- @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror --}}
+                        </div>
+                    </div>
+                    @endif
 
                     <div class="form-group row">
                         <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>

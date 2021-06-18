@@ -20,6 +20,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password','role',
     ];
+// User抓取UserClient裡的user_id的位子，laravel通常會預設關聯到id，所以第二㯗可填可不填
+    public function client(){
+        return $this->hasone('App\UserClient','user_id');
+    }
 
     /**
      * The attributes that should be hidden for arrays.
