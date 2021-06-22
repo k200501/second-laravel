@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductImgsTable extends Migration
+class AddPhotoToProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateProductImgsTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_imgs', function (Blueprint $table) {
-            $table->id();
-            $table->longText('photo')->comment('產品內容照片');
-            $table->integer('product_id')->comment('產品 ID');
-            $table->timestamps();
+        Schema::table('products', function (Blueprint $table) {
+            //
+            $table->longText('photo')->default('https://placeholder.pics/svg/500x500');
         });
     }
 
@@ -28,6 +26,9 @@ class CreateProductImgsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_imgs');
+        Schema::table('products', function (Blueprint $table) {
+            //
+            $table->dropColumn('photo');
+        });
     }
 }

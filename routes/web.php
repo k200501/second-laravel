@@ -17,9 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/contact_us',function(){
-    return view('front.contact_us.index');
-});
+// Route::get('/contact_us',function(){
+//     return view('front.contact_us.index');
+// });
+// Route::get('contact_us','FrontController@contactus');
 
 Auth::routes();
 
@@ -42,9 +43,50 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 // Route::get('/home', 'HomeController@index')->name('home');
 
+Route::prefix('contact_us')-> group(function () {
+    Route::get('/', 'FrontController@contactus');
+    Route::post('/store', 'ContackUsController@store');
+
+
+
+});
+
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+
+    Route::prefix('contact_us')->group(function () {
+        Route::get('/', 'ContackUsController@index');
+        Route::get('/edit/{id}', 'ContackUsController@edit');
+        Route::delete('/delete/{id}', 'ContackUsController@delete');
+
+
+    });
+
+    Route::prefix('/product')->group(function () {
+        // 產品管理
+        Route::prefix('/type')->group(function () {
+            // 產品種類管理
+            Route::get('/', 'ProductTypeCongroller@index');
+            Route::get('/create', 'ProductTypeCongroller@index');
+            Route::post('/store', 'ProductTypeCongroller@store');
+            Route::get('/edit/{id}', 'ProductTypeCongroller@edit');
+            Route::post('/update/{id}', 'ProductTypeCongroller@update');
+            Route::delete('/delete/{id}', 'ProductTypeCongroller@delete');
+        });
+
+        Route::prefix('/item')->group(function () {
+            // 產品品項管理
+            Route::get('/', 'ProductController@index');
+            Route::get('/create', 'ProductController@create');
+            Route::post('/store', 'ProductController@store');
+            Route::get('/edit/{id}', 'ProductController@edit');
+            Route::post('/deleteImage', 'ProductController@deleteImage');
+        });
+    });
+
+
+
+
     Route::get('/news', 'Newscontroller@index');
-    Route::get('/product/type', 'Productcontroller@product');
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/user', 'UserController@index');
     Route::get('/user/create', 'UserController@create');
@@ -52,8 +94,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/user/edit/{id}', 'UserController@edit');
     Route::post('user/update/{id}', 'UserController@update');
     Route::delete('/user/delete/{id}', 'UserController@detete');
-    Route::get('/product/type/create', 'Productcontroller@create');
-    Route::post('/product/store', 'Productcontroller@store');
+
 });
 // Route::get('/admin/news', 'Newscontroller@index');
 //     Route::get('/admin/product/type', 'Productcontroller@product');

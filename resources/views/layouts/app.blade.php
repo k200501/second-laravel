@@ -52,6 +52,9 @@
                             <li class="nav-item">
                                 <a href="{{ asset('/admin/user') }}" class="nav-link">會員管理</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ asset('/admin/contact_us') }}" class="nav-link">聯絡我們</a>
+                            </li>
 
                         @endcan
 

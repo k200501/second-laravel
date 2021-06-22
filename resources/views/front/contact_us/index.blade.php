@@ -26,7 +26,8 @@
 
                 <!--Grid column-->
                 <div class="col-md-9 mb-md-0 mb-5">
-                    <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+                    <form action="{{ asset('/contact_us/store') }}" method="POST">
+                        @csrf
 
                         <!--Grid row-->
                         <div class="row">
@@ -56,8 +57,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="md-form mb-0">
-                                    <input type="text" id="title" name="title" class="form-control">
-                                    <label for="title" class="">Title</label>
+                                    <input type="text" id="subject" name="subject" class="form-control">
+                                    <label for="subject" class="">主旨</label>
                                 </div>
                             </div>
                         </div>
@@ -72,8 +73,9 @@
                                 <div class="md-form">
                                     <textarea type="text" id="content" name="content" rows="2"
                                         class="form-control md-textarea"></textarea>
-                                    <label for="content">Your content</label>
+                                    <label for="content">內容</label>
                                 </div>
+                                <button type="submit" class="btn btn-success">送出</button>
 
                             </div>
                         </div>
@@ -81,10 +83,10 @@
 
                     </form>
 
-                    <div class="text-center text-md-left">
+                    {{-- <div class="text-center text-md-left">
                         <a class="btn btn-primary" onclick="document.getElementById('contact-form').submit();" href="{{ asset('/front/contact_us/store') }}">Send</a>
                     </div>
-                    <div class="status"></div>
+                    <div class="status"></div> --}}
                 </div>
                 <!--Grid column-->
 
