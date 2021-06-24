@@ -7,6 +7,16 @@
         .card-header h2 {
             margin-bottom: 0;
         }
+        .product-img{
+            width: 200px;
+            height: 200px;
+            border: 1px solid #000;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
 
         .del-img-btn {
             position: absolute;
@@ -67,16 +77,31 @@
                                 <label for="price">價格</label>
                                 <input type="text" class="form-control" id="price" name="price" value="{{ $record->price }}">
                             </div>
+                            <div class="form-group row">
+                                <label class="col-12" for="">產品主要圖片</label>
+
+                                <div class="col-md-3">
+
+                                    <img class="w-100" src="{{ $record->photo }}" alt="">
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="photo">修改產品主要圖片</label>
+                                <input type="file" class="form-control" id="photo" name="photo">
+                            </div>
+                            <hr>
 
                             {{-- 要讓使用者可以在編輯資料時砍掉關聯的圖片 --}}
                             <div class="form-group row">
-                                <label class="col-12" for="">既有產品內容圖片</label>
-                                @foreach ($photos as $item)
+                                <label class="col-12" for="">產品其他圖片</label>
+                                @foreach ($record->photos as $photo)
                                 <div class="col-md-3">
                                     {{-- 點選到圖片刪除按鈕時，將該圖片的 ID 記錄下來，傳到後端 --}}
                                     {{-- 後端根據 ID 找到該筆資料，進行刪除 --}}
-                                    <div data-id="{{ $item->id }}" class="del-img-btn">x</div>
-                                    <img class="w-100" src="{{ $item->photo }}" alt="">
+                                    <div data-id="{{ $photo->id }}" class="del-img-btn">x</div>
+                                    <img class="w-100" src="{{ $photo->photo }}" alt="">
                                 </div>
                                 @endforeach
                             </div>
@@ -85,6 +110,7 @@
                                 <label for="photos">新增產品內容圖片</label>
                                 <input type="file" class="form-control" id="photos" name="photos[]" multiple>
                             </div>
+                            <hr>
 
                             <div class="form-group">
                                 <label for="discript">產品描述</label>
@@ -118,11 +144,14 @@
                     'method': 'post',
                     'body': formdate
                 }).then(function (response) {
+                    return response.text();
 
                 }).then(function (result) {
                     // 前端畫面顯示
-                    alert('刪除成功！');
-                    parent_element.remove();
+                    if(result = 'success'){
+                        alert('刪除成功！');
+                        parent_element.remove();
+                    }
                 });
             }
         })

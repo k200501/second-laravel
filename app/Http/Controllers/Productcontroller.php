@@ -7,9 +7,11 @@ use App\Product;
 use App\ProductImg;
 use App\ProductType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\FileContorller;
 use Illuminate\Support\Facades\Validator;
+
 
 
 class Productcontroller extends Controller
@@ -61,11 +63,53 @@ class Productcontroller extends Controller
 
     public function edit($id)
     {
-        $record = Product::find($id);
+        // $record = Product::find($id);
+        // $type = ProductType::get();
+        // $photos = $record->photos;
+        $record = Product::with('photos')->find($id);
         $type = ProductType::get();
-        $photos = $record->photos;
 
         return view($this->edit, compact('record', 'type', 'photos'));
+    }
+    public function undate(Request $request,$id){
+        $record = Product::with('photos')->find($id);
+        $requestData = $request->all();
+        if($request->hasFile('photo')){
+            File::delete(public_path().$record->photo);
+            $path = FileContorller::imageUpload($request->file('photo'),'product');
+            $requestData['photo']=$path;
+        }
+        $record->update($requestData);
+        if($request->hasFile('photos')){
+            foreach($request->file('photos') as $file){
+                $path = FileContorller::imageUpload($file,'product');
+                ProductImg::create([
+                    'product_id' => $record->id,
+                    'photo' => $path
+                ]);
+
+            }
+        }
+        return redirect('/admin/product/item')->with('message','編輯產品成功');
+
+    }
+    public function delete(Request $request,$id){
+        $record = Product::with('photos')->find($id);
+        // 刪除主要圖片
+        File::delete(public_path().$record->photo);
+        // 刪除其他圖片
+        foreach($record->photos as $photo){
+            // 刪除其他圖片的檔案
+            File::delete(public_path().$photo->photo);
+            // 刪除其他圖片資料
+            $photo->delete();
+        }
+        $record->delete();
+        return redirect('/admin/product/item');
+
+
+
+
     }
 
     public function deleteImage(Request $request) {
@@ -76,10 +120,12 @@ class Productcontroller extends Controller
         if (file_exists(public_path() . $old_record->photo)) {
             // 如果該檔案存在，就刪除該檔案
             File::delete(public_path() . $old_record->photo);
+
+
         }
         $old_record->delete();
 
-        return '成功！';
+        return 'success';
     }
 }
 

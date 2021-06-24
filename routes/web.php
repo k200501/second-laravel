@@ -50,6 +50,7 @@ Route::prefix('contact_us')-> group(function () {
 
 
 });
+Route::get('/product','FrontController@product');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
@@ -79,9 +80,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
             Route::get('/create', 'ProductController@create');
             Route::post('/store', 'ProductController@store');
             Route::get('/edit/{id}', 'ProductController@edit');
+            Route::post('/update/{id}', 'Productcontroller@undate');
+            Route::delete('/delete/{id}', 'Productcontroller@delete');
             Route::post('/deleteImage', 'ProductController@deleteImage');
         });
     });
+
 
 
 
