@@ -32,6 +32,15 @@
 
                     <div class="card-body">
                         <form action="{{ asset('/admin/product/type/store') }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                              <label for="type_name">產品種類名稱</label>
+                              <input type="text" class="form-control" id="type_name" name="type_name">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">新增</button>
+                          </form>
+                        {{-- <form action="{{ asset('/admin/product/type/store') }}" method="POST">
 							@csrf
 
                             <div class="form-group">
@@ -40,7 +49,7 @@
                             </div>
 
 							<button type="submit" class="btn btn-primary">新增</button>
-                        </form>
+                        </form> --}}
                     </div>
                 </div>
             </div>

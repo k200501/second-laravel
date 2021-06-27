@@ -31,44 +31,44 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="{{ asset('/admin/product/item/store') }}" method="POST" enctype="multipart/form-data">
-							@csrf
-
+                        <form action="{{ asset('/admin/product/item/store') }}" method="POST">
+                            @csrf
                             <div class="form-group">
                                 <label for="product_type_id">產品種類</label>
                                 <select class="form-control" id="product_type_id" name="product_type_id">
                                     @foreach ($type as $item)
-                                        <option value="{{ $item->id }}">{{ $item->type_name }}</option>
+                                    <option value="{{ $item->id }}">{{ $item->type_name }}</option>
+
                                     @endforeach
+
                                 </select>
-                            </div>
-
+                              </div>
                             <div class="form-group">
-                                <label for="product_name">產品品項名稱</label>
-                                <input type="text" class="form-control" id="product_name" name="product_name">
+                              <label for="product_name">產品品項名稱</label>
+                              <input type="text" class="form-control" id="product_name" name="product_name">
                             </div>
-
                             <div class="form-group">
                                 <label for="price">價格</label>
                                 <input type="text" class="form-control" id="price" name="price">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="photos">產品主要圖片</label>
-                                <input type="file" class="form-control" id="photos" name="photos[]" multiple>
-                            </div>
-                            <div class="form-group">
-                                <label for="photos">產品其他圖片</label>
-                                <input type="file" class="form-control" id="photos" name="photos[]" multiple>
-                            </div>
-
-                            <div class="form-group">
+                              </div>
+                              <div class="form-group">
                                 <label for="discript">產品描述</label>
-                                <textarea class="form-control" name="discript" id="discript" cols="30" rows="10"></textarea>
+                                {{-- <input type="text" class="form-control" id="type_name" name="type_name"> --}}
+                                <textarea name="discript" id="dixcript" cols="30" rows="10"class="form-control"></textarea>
+                              </div>
+
+                            <button type="submit" class="btn btn-primary">新增</button>
+                          </form>
+                        {{-- <form action="{{ asset('/admin/product/type/store') }}" method="POST">
+							@csrf
+
+                            <div class="form-group">
+                                <label for="type_name">產品品項名稱</label>
+                                <input type="text" class="form-control" id="type_name" name="type_name">
                             </div>
 
 							<button type="submit" class="btn btn-primary">新增</button>
-                        </form>
+                        </form> --}}
                     </div>
                 </div>
             </div>

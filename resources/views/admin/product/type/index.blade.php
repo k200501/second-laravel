@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title','title')
+
+
 @section('css')
 <style>
     .card-header h2 {
@@ -23,7 +26,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">產品種類</div>
+                <div class="card-header">產品種類管理</div>
 
 
             </div>
@@ -40,7 +43,7 @@
                     <thead>
                         <tr>
                             <th>產品種類名稱</th>
-                                    <th>產品品項總數</th>
+                                    {{-- <th>產品品項總數</th> --}}
                                     <th>操作</th>
 
 
@@ -50,7 +53,7 @@
                         @foreach ($lists as $item)
                             <tr>
                                 <td>{{ $item->type_name }}</td>
-                                <td>{{ $item->product->count() }}</td>
+                                {{-- <td>{{ $item->product->count() }}</td> --}}
                                 <td>
                                     <a href="{{ asset('/admin/product/type/edit') }}/{{ $item->id }}" class="btn btn-primary btn-sm">編輯</a>
                                     <form action="{{ asset('/admin/product/type/delete') }}/{{ $item->id }}" method="POST" style="display: inline-block">
@@ -78,7 +81,7 @@
                     <tfoot>
                         <tr>
                             <th>產品種類名稱</th>
-                                    <th>產品品項總數</th>
+                                    {{-- <th>產品品項總數</th> --}}
                                     <th>操作</th>
                         </tr>
                     </tfoot>

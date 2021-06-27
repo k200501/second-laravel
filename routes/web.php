@@ -66,12 +66,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         // 產品管理
         Route::prefix('/type')->group(function () {
             // 產品種類管理
-            Route::get('/', 'ProductTypeCongroller@index');
-            Route::get('/create', 'ProductTypeCongroller@index');
-            Route::post('/store', 'ProductTypeCongroller@store');
-            Route::get('/edit/{id}', 'ProductTypeCongroller@edit');
-            Route::post('/update/{id}', 'ProductTypeCongroller@update');
-            Route::delete('/delete/{id}', 'ProductTypeCongroller@delete');
+            Route::get('/', 'ProductTypeController@index');
+            Route::get('/create', 'ProductTypeController@create');
+            Route::post('/store', 'ProductTypeController@store');
+            Route::get('/edit/{id}', 'ProductTypeController@edit');
+            Route::post('/update/{id}', 'ProductTypeController@update');
+            Route::delete('/delete/{id}', 'ProductTypeController@delete');
         });
 
         Route::prefix('/item')->group(function () {
@@ -80,7 +80,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
             Route::get('/create', 'ProductController@create');
             Route::post('/store', 'ProductController@store');
             Route::get('/edit/{id}', 'ProductController@edit');
-            Route::post('/update/{id}', 'Productcontroller@undate');
+            Route::post('/update/{id}', 'Productcontroller@update');
             Route::delete('/delete/{id}', 'Productcontroller@delete');
             Route::post('/deleteImage', 'ProductController@deleteImage');
         });

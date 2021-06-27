@@ -41,22 +41,24 @@ class Productcontroller extends Controller
     }
 
     public function store(Request $request) {
-        $requestData = $request->all();
-        if($request->hasFile('photo')){
-            $requestData['photo'] = FileContorller::imageUpload($request->file('photo'),'product');
-        }
-        $new_record = Product::create($request->all());
+        // dd($request->all());
+        // $requestData = $request->all();
+        Product::create($request->all());
+        // if($request->hasFile('photo')){
+        //     $requestData['photo'] = FileContorller::imageUpload($request->file('photo'),'product');
+        // }
+        // $new_record = Product::create($request->all());
 
-        if ($request->hasFile('photos')) {
-            foreach ($request->file('photos') as $item) {
-                $path = FileContorller::imageUpload($item);
+        // if ($request->hasFile('photos')) {
+        //     foreach ($request->file('photos') as $item) {
+        //         $path = FileContorller::imageUpload($item);
 
-                ProductImg::create([
-                    'photo' => $path,
-                    'product_id' => $new_record->id
-                ]);
-            }
-        }
+        //         ProductImg::create([
+        //             'photo' => $path,
+        //             'product_id' => $new_record->id
+        //         ]);
+        //     }
+        // }
 
         return redirect('/admin/product/item')->with('message', '新增產品成功！');
     }
