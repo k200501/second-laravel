@@ -85,6 +85,16 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
             Route::post('/deleteImage', 'ProductController@deleteImage');
         });
     });
+    Route::get('/', 'FrontController@index');
+    Route::prefix('/shopping_cart')->group(function () {
+        Route::get('step01','FrontController@step01');
+        Route::get('step02','FrontController@step02');
+        Route::get('step03','FrontController@step03');
+        Route::get('step04','FrontController@step04');
+        Route::post('add','FrontController@add');
+        Route::get('content','FrontController@content');
+
+    });
 
 
 
