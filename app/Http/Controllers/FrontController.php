@@ -6,10 +6,16 @@ use App\Product;
 use App\ProductType;
 use Darryldecode\Cart\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class FrontController extends Controller
 {
     //
+
+    public function index()
+    {
+        return view('front.index.index');
+    }
     public function contactus()
     {
         return view('front.contact_us.index');
@@ -25,20 +31,73 @@ class FrontController extends Controller
         return view('front.product.index',compact('record','types'));
     }
 
+    public function step01()
+    {
+        $cartProducts = \Cart::getContent()->sortKeys();
+        return view('front.shopping_cart.step01',compact('cartProducts'));
+    }
+    public function step02()
+    {
+        $qty = \Cart::getTotalQuantity();
+        $subTotal = \Cart::getSubTotal();
+        $shippingFee = \Cart::getSubTotal() > 1000 ? 0 : 60;
+        $total = $subTotal + $shippingFee;
+        return view('front.shopping_cart.step02',compact('qty','subTotal','shippingFee','total'));
+    }
+    public function paymentCheck(Request $request)
+    {
+        Session::put('payment',$request->payment);
+        Session::put('shipment',$request->shipment);
+        return redirect('/shopping_cart/step03');
+    }
+    public function step03()
+    {
+        if(Session::has('payment') && Session::has('shipment')){
+            $qty = \Cart::getTotalQuantity();
+            $subTotal = \Cart::getSubTotal();
+            $shippingFee = \Cart::getSubTotal() > 1000 ? 0 : 60;
+            $total = $subTotal + $shippingFee;
+            return view('front.shopping_cart.step03',compact('qty','subTotal','shippingFee','total'));
+        }else{
+            return redirect('/shopping_cart/step02');
+        }
+    }
+    public function step04()
+    {
+        return view('front.shopping_cart.step04');
+    }
+
     public function add(Request $request){
         $product = Product::find($request->productID);
         \Cart::add(array(
-            'id' =>456,
-            'name' =>'Sample Item',
-            'price' =>67.99,
-            'quantity' => 4,
-            'attributes' =>array()
+            'id' =>$product->id,
+            'name' =>$product->product_name,
+            'price' =>$product->price,
+            'quantity' => 1,
+            'attributes' =>array(
+                'photo'=>$product->photo
+            )
 
         ));
-        return 'ok';
+        return 'success';
+    }
+    public function update(Request $request)
+    {
+        \Cart::update($request->productId, array(
+            'quantity' => array(
+                'relative' => false,
+                'value' => $request->newQty
+            ),
+        ));
+        return 'success';
     }
     public function content(){
         $cartCollection = \Cart::getContent();
         dd($cartCollection);
+    }
+    public function clear()
+    {
+        \Cart::clear();
+        return 'success';
     }
 }

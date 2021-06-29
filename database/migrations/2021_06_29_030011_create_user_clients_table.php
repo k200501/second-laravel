@@ -16,8 +16,8 @@ class CreateUserClientsTable extends Migration
         Schema::create('user_clients', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('phone')->comment('電話');
-            $table->string('address')->comment('地址');
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
         });
     }

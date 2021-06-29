@@ -55,7 +55,7 @@
                     <tbody>
                         @foreach ($lists as $item)
                             <tr>
-                                <td></td>
+                                <td>{{ $item->type->type_name }}</td>
                                 <td>{{ $item->product_name }}</td>
                                 <td>{{ $item->price }}</td>
                                 <td>{{ $item->discript }}</td>

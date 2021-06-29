@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 // Route::get('/contact_us',function(){
 //     return view('front.contact_us.index');
 // });
@@ -51,8 +51,25 @@ Route::prefix('contact_us')-> group(function () {
 
 });
 Route::get('/product','FrontController@product');
+Route::get('/', 'FrontController@index');
+    Route::prefix('/shopping_cart')->group(function () {
+        Route::get('/step01','FrontController@step01');
+        Route::get('/step02','FrontController@step02');
+        Route::post('/step02/check','FrontController@paymentCheck');
+        Route::get('/step03','FrontController@step03');
+        Route::get('/step04','FrontController@step04');
+        Route::post('/add','FrontController@add');
+        Route::get('/content','FrontController@content');
+        Route::post('/update', 'FrontController@update');
+        Route::get('/clear', 'FrontController@clear');
+
+
+    });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/news', 'Newscontroller@index');
+
 
     Route::prefix('contact_us')->group(function () {
         Route::get('/', 'ContackUsController@index');
@@ -61,6 +78,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
 
     });
+    Route::prefix('news')->group(function () {
+        Route::get('/', 'NewsController@index');
+        Route::get('/create', 'NewsController@create');
+        Route::post('/store', 'NewsController@store');
+        Route::get('/edit/{id}', 'NewsController@edit');
+        Route::post('/update/{id}', 'NewsController@update');
+    });
+
 
     Route::prefix('/product')->group(function () {
         // 產品管理
@@ -85,29 +110,43 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
             Route::post('/deleteImage', 'ProductController@deleteImage');
         });
     });
-    Route::get('/', 'FrontController@index');
-    Route::prefix('/shopping_cart')->group(function () {
-        Route::get('step01','FrontController@step01');
-        Route::get('step02','FrontController@step02');
-        Route::get('step03','FrontController@step03');
-        Route::get('step04','FrontController@step04');
-        Route::post('add','FrontController@add');
-        Route::get('content','FrontController@content');
+    // Route::get('/', 'FrontController@index');
+    // Route::prefix('/shopping_cart')->group(function () {
+    //     Route::get('/step01','FrontController@step01');
+    //     Route::get('/step02','FrontController@step02');
+    //     Route::post('/step02/check','FrontController@paymentCheck');
+    //     Route::get('/step03','FrontController@step03');
+    //     Route::get('/step04','FrontController@step04');
+    //     Route::post('/add','FrontController@add');
+    //     Route::get('/content','FrontController@content');
+    //     Route::post('/update', 'FrontController@update');
+    //     Route::get('/clear', 'FrontController@clear');
 
+
+    // });
+    Route::prefix('user')->group(function ()
+    {
+        Route::get('/', 'UserController@index');
+        Route::get('/create', 'UserController@create');
+        Route::post('/store', 'UserController@store');
+        Route::get('/edit/{id}', 'UserController@edit');
+        Route::post('/update/{id}', 'UserController@update');
+        Route::delete('/delete/{id}', 'UserController@delete');
     });
 
 
 
 
 
-    Route::get('/news', 'Newscontroller@index');
-    Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/user', 'UserController@index');
-    Route::get('/user/create', 'UserController@create');
-    Route::post('/user/store', 'UserController@store');
-    Route::get('/user/edit/{id}', 'UserController@edit');
-    Route::post('user/update/{id}', 'UserController@update');
-    Route::delete('/user/delete/{id}', 'UserController@detete');
+
+    // Route::get('/news', 'Newscontroller@index');
+    // Route::get('/home', 'HomeController@index')->name('home');
+    // Route::get('/user', 'UserController@index');
+    // Route::get('/user/create', 'UserController@create');
+    // Route::post('/user/store', 'UserController@store');
+    // Route::get('/user/edit/{id}', 'UserController@edit');
+    // Route::post('user/update/{id}', 'UserController@update');
+    // Route::delete('/user/delete/{id}', 'UserController@detete');
 
 });
 // Route::get('/admin/news', 'Newscontroller@index');
